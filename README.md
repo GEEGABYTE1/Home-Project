@@ -6,4 +6,4 @@ Mini Home Project made with Arduino.
 Coming Soon
 
 
-# Temperature Projects 🌡 
+# Temperature Project 🌡 
