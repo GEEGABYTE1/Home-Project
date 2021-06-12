@@ -1,13 +1,20 @@
+#include<IRremote.h>
 
+int IRPIN = 2;
+IRrecv irrecv(IRPIN);
+decode_results results;
 
 
 
 void setup() {
 Serial.begin(9600);
+  Serial.println("Enabling IRin");
+  irrecv.enableIRIn();
   pinMode(3, OUTPUT);
   pinMode(13, OUTPUT);
   pinMode(12, OUTPUT);
   pinMode(11, OUTPUT);
+  Serial.println("Enabled IRin");
 
 }
 
@@ -41,5 +48,20 @@ else if (vol>30)
   digitalWrite(3, HIGH);
   delay(500);
 }
+
+if(irrecv.decode(&results))
+  {
+    irrecv.resume();
+    Serial.println(results.value);
+    if(results.value==16738455)
+      {
+        digitalWrite(3, HIGH);
+      }
+    else if(results.value==16750695)
+      {
+        digitalWrite(3, LOW);
+      }
+    irrecv.resume();
+  }
 
 }
