@@ -3,7 +3,16 @@
 
 Mini Home Project made with Arduino. 
 
-Coming Soon
 
 
-# Temperature Project 🌡 
+# Temperature Sensors 🌡
+
+
+# Right from your hand 👋🏼
+
+
+# Automation 🤖
+
+
+
+Coming soon! 
