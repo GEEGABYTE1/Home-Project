@@ -1,4 +1,7 @@
+#include <LiquidCrystal_I2C.h>
+#include <Wire.h>
 #include<IRremote.h>
+LiquidCrystal_I2C lcd(0x27,16,2);
 
 int IRPIN = 2;
 IRrecv irrecv(IRPIN);
@@ -22,6 +25,7 @@ Serial.begin(9600);
   pinMode(redpin, OUTPUT);
   pinMode(bluepin, OUTPUT);
   pinMode(greenpin, OUTPUT);
+  lcd.init();
 
 }
 
@@ -63,10 +67,20 @@ if(irrecv.decode(&results))
     if(results.value==16738455)
       {
         digitalWrite(3, HIGH);
+        lcd.backlight();
+        lcd.setCursor(0,0);
+        lcd.print("The Fan is on ");
+        delay(4500);
+        lcd.clear();
       }
     else if(results.value==16750695)
       {
         digitalWrite(3, LOW);
+        lcd.backlight();
+        lcd.setCursor(0,0);
+        lcd.print("The Fan is off ");
+        delay(4500);
+        lcd.clear();
       }
 
     else if(results.value==16736925)
@@ -76,6 +90,13 @@ if(irrecv.decode(&results))
         digitalWrite(bluepin, LOW);
         digitalWrite(greenpin, LOW);
         redpin_count = 1;
+        lcd.backlight();
+        lcd.setCursor(0,0);
+        lcd.print("The Green LED ");
+        lcd.setCursor(0, 1);
+        lcd.print("is on");
+        delay(4500);
+        lcd.clear();
       }
     else if(results.value==16761405)
       {
@@ -84,6 +105,13 @@ if(irrecv.decode(&results))
         digitalWrite(bluepin, LOW);
         digitalWrite(redpin, LOW);
         greenpin_count = 1;
+        lcd.backlight();
+        lcd.setCursor(0,0);
+        lcd.print("The Red LED ");
+        lcd.setCursor(0, 1);
+        lcd.print("is on");
+        delay(4500);
+        lcd.clear();
       }
      else if(results.value==16720605)
       {
@@ -93,12 +121,46 @@ if(irrecv.decode(&results))
         digitalWrite(greenpin, LOW);
         bluepin_count = 1;
         Serial.println(bluepin_count);
+        lcd.backlight();
+        lcd.setCursor(0,0);
+        lcd.print("The Blue LED ");
+        lcd.setCursor(0, 1);
+        lcd.print("is on");
+        delay(4500);
+        lcd.clear();
       }
      else if(results.value==16754775)
       {
         digitalWrite(redpin, LOW);
         digitalWrite(bluepin, LOW);
         digitalWrite(greenpin, LOW);
+      }
+     else if(results.value==16732845)
+      {
+        lcd.backlight();
+        lcd.setCursor(0,0);
+        lcd.print("The Temp is: ");
+        lcd.setCursor(0, 1);
+        lcd.print(vol);
+        lcd.setCursor(3, 1);
+        lcd.print("Deg Celsius");
+        delay(4500);
+        lcd.clear();
+      }
+     else if(results.value == 16728765)
+      {
+        lcd.init();
+        lcd.backlight();
+        lcd.setCursor(0, 0);
+        lcd.print("Vapor Content: ");
+        int sensorValue = analogRead(A0);
+        lcd.setCursor(0, 1);
+        lcd.print(sensorValue);
+        lcd.setCursor(3, 1);
+        lcd.print("metric perm");
+        delay(4500);
+        lcd.clear();
+        
       }
     
      
